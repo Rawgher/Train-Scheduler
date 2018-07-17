@@ -75,26 +75,29 @@
     console.log(trainTime);
     console.log(frequency);
   
-   // var diffTime = moment().diff(moment.unix(firebaseTrainTimeInput), "minutes");
-    // var timeRemainder = moment().diff(moment.unix(firebaseTrainTimeInput), "minutes") % firebaseFrequency ;
-
     // Prettify the employee start
-    var trainTimePretty = moment.unix(trainTime).format("MM/DD/YYYY");
-    //var nextTrainArrival = moment().add(minutes, "m").format("hh:mm A"); 
+    var trainTimePretty = moment.unix(trainTime).format("HH:mm A");
+
   
     // Calculate the total billed rate
-    var minsAway = trainTime - frequency;
-    console.log(minsAway);
-  
+    var diffTime = moment().diff(moment.unix(trainTime), "minutes");
+    var timeRemainder = moment().diff(moment.unix(trainTime), "minutes");
+    console.log(timeRemainder, "time remainder")
+	var minutes = frequency - timeRemainder;
+
+	var minsAway = moment().subtract(minutes, "mm").format("HH:mm"); 
+
+  console.log(minutes, "mins away");
     // Create the new row
-    var newRow = $("<tr>").append(
-      $("<td>").text(trainName),
-      $("<td>").text(destination),
-      $("<td>").text(frequency),
-      $("<td>").text(trainTimePretty),
-      $("<td>").text(minsAway),
-    );
-  
+    var newRow = $("<tr>");
+
+    var name = $("<td>" + trainName + "</td>");
+    var location = $("<td>" + destination + "</td>");
+    var amount = $("<td>" + frequency + "</td>");
+    var times = $("<td>" + trainTimePretty + "</td>");
+    var mins = $("<td>" + minsAway + "</td>");
+
+    newRow.append(name, location, amount, times, mins);
     // Append the new row to the table
     $("#train-table > tbody").append(newRow);
   });

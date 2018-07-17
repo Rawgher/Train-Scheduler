@@ -76,18 +76,28 @@
     console.log(frequency);
   
     // Prettify the employee start
-    var trainTimePretty = moment.unix(trainTime).format("HH:mm A");
+    var trainTimePretty = moment.unix(trainTime).format("HH:mm");
 
   
     // Calculate the total billed rate
-    var diffTime = moment().diff(moment.unix(trainTime), "minutes");
-    var timeRemainder = moment().diff(moment.unix(trainTime), "minutes");
-    console.log(timeRemainder, "time remainder")
-	var minutes = frequency - timeRemainder;
+    // var diffTime = moment().diff(moment.unix(trainTime), "minutes");
+    // console.log(diffTime, "this is diff time");
 
-	var minsAway = moment().subtract(minutes, "mm").format("HH:mm"); 
+    // var timeRemainder = diffTime % frequency;
+    // console.log(timeRemainder, "time remainder");
 
-  console.log(minutes, "mins away");
+    // var minutes = frequency - timeRemainder;
+
+    // var minsAway = moment().subtract(minutes, "m").format("mm"); 
+
+    var minsAway = trainTimePretty - frequency;
+
+    console.log(minsAway);
+    
+    //var minsAway = moment(trainTime).diff(moment(frequency), "minutes");
+
+//   console.log(minutes, "mins away");
+
     // Create the new row
     var newRow = $("<tr>");
 

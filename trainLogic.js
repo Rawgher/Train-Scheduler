@@ -13,13 +13,14 @@
 // 5. Calculate Total billed
 
 // 1. Initialize Firebase
-var config = {
-    apiKey: "AIzaSyA_QypGPkcjPtylRDscf7-HQl8ribnFeIs",
-    authDomain: "time-sheet-55009.firebaseapp.com",
-    databaseURL: "https://time-sheet-55009.firebaseio.com",
-    storageBucket: "time-sheet-55009.appspot.com"
+ var config = {
+    apiKey: "AIzaSyD4hCuif3xCB9xO8GZxy2qWvxflJze0I6M",
+    authDomain: "train-scheduler-ca710.firebaseapp.com",
+    databaseURL: "https://train-scheduler-ca710.firebaseio.com",
+    projectId: "train-scheduler-ca710",
+    storageBucket: "train-scheduler-ca710.appspot.com",
+    messagingSenderId: "307991242541"
   };
-  
   firebase.initializeApp(config);
   
   var database = firebase.database();

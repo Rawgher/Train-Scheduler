@@ -72,7 +72,7 @@ database.ref().on("child_added", function (childSnapshot) {
     var mins = $("<td>" + minutes + "</td>");
 
     newRow.append(name, location, firstTrain, amount, times, mins);
-    
+
     // Append the new row to the table
     $("#train-table > tbody").append(newRow);
 });

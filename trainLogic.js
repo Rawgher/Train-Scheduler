@@ -1,18 +1,5 @@
-// need to change firebase link
 
-
-
-
-// Steps to complete:
-
-// 1. Initialize Firebase
-// 2. Create button for adding new employees - then update the html + update the database
-// 3. Create a way to retrieve employees from the employee database.
-// 4. Create a way to calculate the months worked. Using difference between start and current time.
-//    Then use moment.js formatting to set difference in months.
-// 5. Calculate Total billed
-
-// 1. Initialize Firebase
+// Initialize Firebase
 var config = {
     apiKey: "AIzaSyD4hCuif3xCB9xO8GZxy2qWvxflJze0I6M",
     authDomain: "train-scheduler-ca710.firebaseapp.com",
@@ -25,17 +12,17 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-// 2. Button for adding Employees
+// Button for adding new trains
 $("#add-train-btn").on("click", function (event) {
     event.preventDefault();
 
-    // Grabs user input
+    // Grabs user input from form
     var trainName = $("#train-name-input").val().trim();
     var destination = $("#destination-input").val().trim();
     var trainTime = $("#first-train-input").val().trim();
     var frequency = $("#frequency-input").val().trim();
 
-    // Creates local "temporary" object for holding employee data
+    // Creates local "temporary" objects for holding the data
     var newTrain = {
         train: trainName,
         destination: destination,
@@ -43,14 +30,8 @@ $("#add-train-btn").on("click", function (event) {
         frequency: frequency
     };
 
-    // Uploads employee data to the database
+    // Uploads the train data to the database
     database.ref().push(newTrain);
-
-    // Logs everything to console
-    console.log(newTrain.trainName);
-    console.log(newTrain.destination);
-    console.log(newTrain.trainTime);
-    console.log(newTrain.frequency);
 
     // Clears all of the text-boxes
     $("#train-name-input").val("");
@@ -59,9 +40,8 @@ $("#add-train-btn").on("click", function (event) {
     $("#first-train-input").val("");
 });
 
-// 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
+// Create Firebase event for adding trains to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function (childSnapshot) {
-    console.log(childSnapshot.val());
 
     // Store everything into a variable.
     var trainName = childSnapshot.val().train;
@@ -69,32 +49,17 @@ database.ref().on("child_added", function (childSnapshot) {
     var trainTime = childSnapshot.val().trainTime;
     var frequency = parseInt(childSnapshot.val().frequency);
 
-    // Employee Info
-    console.log(trainName);
-    console.log(destination);
-    console.log(trainTime);
-    console.log(frequency, "frequency");
+    // Makes the train time look better 
+    var trainTimePretty = moment(trainTime, "HH:mm A").subtract(1, "years");
 
-    // Prettify the employee start
-    var trainTimePretty = moment(trainTime, "HH:mm").subtract(1, "years");
-    console.log(trainTimePretty, "pretty train time")
-
+    //Variables used to calculate the minutes away
     var diffTime = moment().diff(moment(trainTimePretty), "minutes");
-    console.log(diffTime, "this is diff time");
 
     var timeRemainder = diffTime % frequency;
-    console.log(timeRemainder, "time remainder");
 
     var minutes = frequency - timeRemainder;
 
     var minsAway = moment().add(minutes, "minutes").format("HH:mm");
-
-
-    console.log(minsAway);
-
-    //var minsAway = moment(trainTime).diff(moment(frequency), "minutes");
-
-    console.log(minsAway, "mins away");
 
     // Create the new row
     var newRow = $("<tr>");
@@ -107,14 +72,8 @@ database.ref().on("child_added", function (childSnapshot) {
     var mins = $("<td>" + minutes + "</td>");
 
     newRow.append(name, location, firstTrain, amount, times, mins);
+    
     // Append the new row to the table
     $("#train-table > tbody").append(newRow);
 });
 
-  // Example Time Math
-  // -----------------------------------------------------------------------------
-  // Assume Employee start date of January 1, 2015
-  // Assume current date is March 1, 2016
-
-  // We know that this is 15 months.
-  // Now we will create code in moment.js to confirm that any attempt we use meets this test case

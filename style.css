@@ -1,0 +1,22 @@
+#train-table th, td {
+    display: inline-block;
+    width: 16.66%;
+    }
+
+th {
+    text-align: center;
+    }
+
+tr {
+    text-align: center;
+    }
+
+.jumbo {
+    background-color: #007bff;
+    color: white;
+}
+
+.spacing {
+    margin-left: -15px
+}
+        
